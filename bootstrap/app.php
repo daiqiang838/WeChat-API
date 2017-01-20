@@ -48,6 +48,9 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+//Dingo API
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -63,9 +66,10 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'main' => App\Api\Middlewares\MainMiddleware::class,
+     'auth' => App\Api\Middlewares\AuthenMiddleware::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,8 +97,8 @@ $app->singleton(
 |
 */
 
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
-    require __DIR__.'/../routes/web.php';
-});
+//$app->group(['namespace' => 'App\Api\v1\Controllers'], function ($app) {
+    require __DIR__.'/../app/Api/Routes/routes.php';
+//});
 
 return $app;

@@ -12,5 +12,14 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    return "Hello Lumen";
 });
+
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1.0', function ($api){
+    $api->get('/user', function(){
+        return 'This is Dingo API';
+    });
+});
+
