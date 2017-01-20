@@ -59,8 +59,7 @@ class CommonController extends Controller {
         try{
             $this->validate($request, $rules, $error);
         }catch (ValidationException $e){
-            //dd($e->validator->errors()->first());
-            $this->error($e->validator->errors()->first());
+            dd($e->validator->errors()->first());
         }
     }
     /**

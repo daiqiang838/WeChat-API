@@ -9,7 +9,7 @@
 namespace App\Api\v1\Controllers\User;
 
 use App\Api\v1\Controllers\CommonController;
-use Illuminate\Support\Facades\Validator;
+
 class UserController extends CommonController
 {
     /**
@@ -18,26 +18,17 @@ class UserController extends CommonController
      * @param
      */
     public function userLogin(){
-
-        $data = self::$request->only([
-            'admin_id',
-            'role'
-        ]);
         $rules = [
-            'admin_id' => 'required',
-            'role' => 'required',
+            'id' => 'required|max:600',
+            'name' => 'required|max:600',
         ];
-        $errors = [
-            'required' => ':attribute 必须输入',
+        $error = [
+            'required' => ':attribute 不能为空',
+            'max' => ':attribute 长度请限制在 200个字符 之内',
+            'integer' => ':attribute 必须为整数',
         ];
-        $validator = Validator::make($data, $rules, $errors);
-        if ($validator->fails()) {
-            return $this->returnData(1, current(current($validator->errors()->toArray())));
-        }
 
-
-
-
-
+        $this->valid(self::$request, $rules, $error);
+        $this->success(self::$request->input('id'));
     }
 }
